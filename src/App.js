@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Particles from "react-particles-js";
+import Heading from "./components/Heading/Heading";
+import { themes } from "./themes";
 
-function App() {
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+        mode: "repulse"
+      }
+    }
+  }
+};
+
+const App = () => {
+  let appStyle,
+    paintTheme = useState(null);
+
+  paintTheme = () => {
+    var randomNumber = Math.floor(Math.random() * themes.length);
+
+    let background = themes[randomNumber].background;
+    let color = themes[randomNumber].color;
+
+    appStyle = { background: background, color: color };
+  };
+  paintTheme();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="App"
+      onClick={() => {
+        console.log("clicked");
+        paintTheme();
+      }}
+      style={appStyle}
+    >
+      <Heading />
+      <Particles className="particles" params={particlesOptions} />
     </div>
   );
-}
+};
 
 export default App;
